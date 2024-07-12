@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "@pixi/sound": "^6.0.0",
+    "@types/gsap": "^3.0.0",
+    "@types/node": "^20.14.9",
+    "@types/pixi.js": "^5.0.0",
+    "pixi.js": "^8.2.1",
+    "typescript": "^5.5.2"
+  },
+  "name": "bubbles",
+  "version": "1.0.0",
+  "main": "index.html",
+  "devDependencies": {
+    "ts-loader": "^9.5.1",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "scripts": {
+    "start": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Sergei.V.Filippov",
+  "license": "ISC",
+  "description": "Simple Bubbles Game"
+}

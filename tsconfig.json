@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "outDir": "app/",
+    "noImplicitAny" : true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "module": "esnext",
+    "target": "ES2018",
+    "sourceMap": true,
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "isolatedModules": true
+  },
+  "files": [
+    "./src/index.ts",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
