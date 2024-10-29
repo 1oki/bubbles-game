@@ -20,7 +20,7 @@ This project is a Match-3 Puzzle Game built with PixiJS and TypeScript. Players 
 1. **Clone the repository**:
 
 ```bash
-git clone https://github.com/yourusername/match-3-game.git
+git clone https://github.com/1oki/bubbles-game.git
 cd match-3-game
 ```
 
