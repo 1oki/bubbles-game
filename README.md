@@ -10,7 +10,6 @@ This project is a Match-3 Puzzle Game built with PixiJS and TypeScript. Players 
 
 ## Table of Contents
 - Installation
-- Usage
 - Gameplay
 - Controls
 - Development
@@ -19,42 +18,33 @@ This project is a Match-3 Puzzle Game built with PixiJS and TypeScript. Players 
 ## Installation
 1. **Clone the repository**:
 
-```bash
-git clone https://github.com/1oki/bubbles-game.git
-cd match-3-game
-```
+   ```bash
+   git clone https://github.com/1oki/bubbles-game.git
+   cd match-3-game
+   ```
 
 2. **Install dependencies**:
 
-Ensure you have Node.js and npm installed. Run:
-
-```bash
-
-npm install
-```
+   ```bash
+   npm install
+   ```
 3. **Install Additional Packages**:
 
-This game uses @pixi/sound for sound effects and background music. Install it if not included in your package.json:
+   This game uses @pixi/sound for sound effects and background music. Install it if not included in your package.json:
 
-```bash
-npm install @pixi/sound
-```
+   ```bash
+   npm install @pixi/sound
+   ```
 4. **Build the Project**:
 
-Compile TypeScript files:
-
-```bash
-npm run build
-```
+   ```bash
+   npm run build
+   ```
 5. **Run the Game**:
 
-Serve the game using a local server such as lite-server:
-
-```bash
-npm run start
-```
-## Usage
-Place your sound files (click.mp3, destroy.mp3, background-music.mp3) in the appropriate directory (e.g., public/sounds). Update paths in the code if necessary.
+   ```bash
+   npm run start
+   ```
 
 ## Gameplay
 1. Objective: Score as many points as possible before the timer runs out by creating tile matches.
