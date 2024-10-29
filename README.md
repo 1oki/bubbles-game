@@ -1,7 +1,7 @@
 # Match-3 Game
 This project is a Match-3 Puzzle Game built with PixiJS and TypeScript. Players swap adjacent tiles to create groups of 3 or more matching tiles, which are then destroyed to gain points. The game includes sound effects and background music, each with independent mute/unmute controls.
 
-$ Features
+## Features
 - Match-3 Mechanics: Swap adjacent tiles to form groups of three or more.
 - Score System: Earn points for each tile destroyed.
 - Timer: The game is time-bound, with a countdown timer.
@@ -44,7 +44,6 @@ npm install @pixi/sound
 Compile TypeScript files:
 
 ```bash
-Копировать код
 npm run build
 ```
 5. **Run the Game**:
@@ -52,7 +51,6 @@ npm run build
 Serve the game using a local server such as lite-server:
 
 ```bash
-Копировать код
 npm run start
 ```
 ## Usage
@@ -73,7 +71,7 @@ The game ends when the timer reaches zero. Your score is then displayed on the s
 - Swap Tiles: Click two adjacent tiles to swap their positions.
   
 ## Development
-File Structure
+### File Structure
 - src/: Contains TypeScript source code for the game.
   - Game.ts: Main game logic, including UI and controls.
   - Grid.ts: Manages the tile grid and matching logic.
