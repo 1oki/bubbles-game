@@ -1,4 +1,4 @@
-# Match-3 Game
+# Bubbles (Match-3) Game
 This project is a Match-3 Puzzle Game built with PixiJS and TypeScript. Players swap adjacent tiles to create groups of 3 or more matching tiles, which are then destroyed to gain points. The game includes sound effects and background music, each with independent mute/unmute controls.
 
 ## Features
