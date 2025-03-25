@@ -2,6 +2,7 @@ import { Application, Sprite, Text, Texture} from "pixi.js";
 import { sound } from '@pixi/sound';
 import Grid from './Grid';
 
+//  Main Game class that manages the game state and logic.
 class Game {
     private app: Application;
     private bubbleTexture: Texture;
@@ -20,24 +21,31 @@ class Game {
     private muteMusicButton: Text;
     private soundEffectsEnabled: boolean;
     private musicEnabled: boolean;
+    private musicVolume: number;
+    private soundEffectsVolume: number;
     
-    constructor(app: Application, bubbleTexture: Texture, startButtonTexture: Texture) {
+
+    constructor(app: Application, tileSize: number, gridSize: number, bubbleTexture: Texture, startButtonTexture: Texture) {
         this.app = app
         this.bubbleTexture = bubbleTexture;
         this.startButtonTexture = startButtonTexture;
-        this.tileSize = 50;
-        this.gridSize = 7;
+        this.tileSize = tileSize;
+        this.gridSize = gridSize;
         this.colors = ['0xFF0000', '0x00FF00', '0x0000FF', '0xFFFF00', '0xFF00FF', '0x00FFFF'];
         this.timeLimit = 60;
         this.timeLeft = this.timeLimit;
         this.score = 0;
-        this.musicEnabled = true;
+        this.musicEnabled = false;
+        this.soundEffectsEnabled = false;
+        this.musicVolume = 0.3;
+        this.soundEffectsVolume = 0.1;
 
         this.createStartButton();
         this.createMusicMuteButton();
         this.createSoundEffectMuteButton();
         this.loadSounds();
     }
+
     private updateScore(points: number) {
         this.score += points;
     }
@@ -45,6 +53,8 @@ class Game {
     private createStartButton() {
         const startButton = new Sprite(this.startButtonTexture)
 
+        startButton.width = this.tileSize*4;
+        startButton.height = this.tileSize*4;
         startButton.x = (this.app.screen.width - startButton.width) / 2;
         startButton.y = (this.app.screen.height - startButton.height) / 2;
         startButton.eventMode = 'static';
@@ -60,12 +70,14 @@ class Game {
     }
 
     private loadSounds() {
-        this.soundEffectsEnabled = true;
-
+        
         sound.add('click', '../assets/click.mp3');
         sound.add('destroy', '../assets/destroy.mp3');
         sound.add('music', '../assets/music.mp3');
-        sound.play('music',{ loop: true });
+        sound.volume('click', this.soundEffectsEnabled ? this.soundEffectsVolume : 0);
+        sound.volume('destroy', this.soundEffectsEnabled ? this.soundEffectsVolume : 0);
+        sound.volume('music',  this.musicVolume);
+        this.musicEnabled ? sound.play('music',{ loop: true }) : '';
     }
 
     private createMusicMuteButton() {
@@ -73,7 +85,7 @@ class Game {
             text: `Music`,
             style: {
                 fontFamily: 'Arial',
-                fontSize: 24,
+                fontSize: this.app.screen.width < 380 ? 16 : 24,
                 fill: 0xffffff,
                 align: 'center'
             }
@@ -85,15 +97,15 @@ class Game {
         this.app.stage.addChild(music);
 
         this.muteMusicButton = new Text({
-            text: `On`,
+            text: this.musicEnabled ? "On" : "Off",
             style: {
                 fontFamily: 'Arial',
-                fontSize: 24,
-                fill: 0x00ff00,
+                fontSize: this.app.screen.width < 380 ? 16 : 24,
+                fill: this.musicEnabled ? "0x00FF00" : "0xFF0000",
                 align: 'center',
             }           
         });
-        this.muteMusicButton.x = 80;
+        this.muteMusicButton.x = this.app.screen.width < 380 ? 60 : 80;
         this.muteMusicButton.y = 10;
         this.muteMusicButton.interactive = true;
         this.muteMusicButton.cursor = 'pointer';
@@ -107,7 +119,7 @@ class Game {
             text: `Sound effects`,
             style: {
                 fontFamily: 'Arial',
-                fontSize: 24,
+                fontSize: this.app.screen.width < 380 ? 16 : 24,
                 fill: 0xffffff,
                 align: 'center'
             }
@@ -115,20 +127,22 @@ class Game {
         });
         soundEffects.x = 150;
         soundEffects.y = 10;
+        soundEffects.x = this.app.screen.width < 380 ? 10 : 150;
+        soundEffects.y = this.app.screen.width < 380 ? 30 : 10;
 
         this.app.stage.addChild(soundEffects);
 
         this.muteEffectsButton = new Text({
-            text: `On`,
+            text: this.soundEffectsEnabled ? "On" : "Off",
             style: {
                 fontFamily: 'Arial',
-                fontSize: 24,
-                fill: 0x00ff00,
+                fontSize: this.app.screen.width < 380 ? 16 : 24,
+                fill: this.soundEffectsEnabled ? "0x00FF00" : "0xFF0000",
                 align: 'center',
             }           
         });
-        this.muteEffectsButton.x = 300;
-        this.muteEffectsButton.y = 10;
+        this.muteEffectsButton.x = this.app.screen.width < 380 ? 115 : 303;
+        this.muteEffectsButton.y = this.app.screen.width < 380 ? 30 : 10;
         this.muteEffectsButton.interactive = true;
         this.muteEffectsButton.cursor = 'pointer';
         this.muteEffectsButton.on('pointerdown', () => this.toggleSoundEffects());
@@ -140,7 +154,7 @@ class Game {
         this.musicEnabled = !this.musicEnabled;
 
         if(this.musicEnabled) {
-            sound.play('music',{ loop: true });
+            sound.play('music',{ loop: true, volume: this.musicVolume });
         } else {
             sound.stop('music');
         }
@@ -152,8 +166,8 @@ class Game {
     private toggleSoundEffects() {
         this.soundEffectsEnabled = !this.soundEffectsEnabled;
 
-        sound.volume('click', this.soundEffectsEnabled ? 1 : 0);
-        sound.volume('destroy', this.soundEffectsEnabled ? 1 : 0);
+        sound.volume('click', this.soundEffectsEnabled ? this.soundEffectsVolume : 0);
+        sound.volume('destroy', this.soundEffectsEnabled ? this.soundEffectsVolume : 0);
 
         this.muteEffectsButton.text = this.soundEffectsEnabled ? "On" : "Off";
         this.muteEffectsButton.style.fill = this.soundEffectsEnabled ? "0x00FF00" : "0xFF0000";
@@ -161,17 +175,17 @@ class Game {
 
     private createTimer() {
         this.timerText = new Text({
-            text: `Time remaining: ${this.timeLeft} seconds`,
+            text: this.app.screen.width < 380 ? `Time remaining: \n${this.timeLeft} seconds` : `Time remaining: ${this.timeLeft} seconds`,
             style: {
                 fontFamily: 'Arial',
-                fontSize: 24,
+                fontSize: this.app.screen.width < 380 ? 16 : 24,
                 fill: 0xffffff,
                 align: 'center'
             }
         });
 
-        this.timerText.x = this.app.screen.width - 320;
-        this.timerText.y = 10;
+        this.timerText.x = this.app.screen.width < 380 ? 10 : this.app.screen.width - 320;
+        this.timerText.y = this.app.screen.width < 680 ? this.app.screen.width < 380 ? this.app.screen.height - 45: this.app.screen.height - 30 : 10;
 
         this.app.stage.addChild(this.timerText);
     }
@@ -179,7 +193,7 @@ class Game {
     private startTimer() {
         this.timerInterval = setInterval(() => {
             this.timeLeft--;
-            this.timerText.text = `Time remaining: ${this.timeLeft} seconds`;
+            this.timerText.text = this.app.screen.width < 380 ? `Time remaining: \n${this.timeLeft} seconds` : `Time remaining: ${this.timeLeft} seconds`;
 
             if (this.timeLeft <= 0) {
                 clearInterval(this.timerInterval);
@@ -198,6 +212,7 @@ class Game {
         this.grid = new Grid(this.gridSize, this.tileSize, this.colors, this.bubbleTexture, this.app, this.updateScore.bind(this));
         this.grid.createGrid();
 
+
     }
 
     private endGame() {
@@ -210,7 +225,7 @@ class Game {
 
     private showScore() {
         this.scoreDisplay = new Text({
-            text:`Game Over! Time\'s up! \n In ${this.timeLimit} seconds you've scored ${this.score} points `, 
+            text:`Game Over! Time\'s up! \n In ${this.timeLimit} seconds \n you've scored ${this.score} points `, 
             style: {
                 fontFamily: 'Arial',
                 fontSize: 24,
@@ -219,7 +234,7 @@ class Game {
             }
         });
         this.scoreDisplay.x = (this.app.screen.width - this.scoreDisplay.width) / 2;
-        this.scoreDisplay.y = (this.app.screen.height - this.scoreDisplay.height) / 4;
+        this.scoreDisplay.y = this.app.screen.height - 90;
 
         this.app.stage.addChild(this.scoreDisplay);
     }
