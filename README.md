@@ -67,8 +67,8 @@ The game ends when the timer reaches zero. Your score is then displayed on the s
 - assets/: Holds images, textures, and sounds used in the game.
 
 ## Customization
-Add new sounds by placing files in public/sounds/ and updating the paths in Game.ts.
-Adjust grid size and tile size in Game.ts to change gameplay dimensions.
+Add new sounds by placing files in "assets" folder and updating the paths in Game.ts.
+Adjust grid size in index.ts to change gameplay dimensions.
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
