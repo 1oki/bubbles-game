@@ -20,7 +20,7 @@ This project is a Match-3 Puzzle Game built with PixiJS, GSAP. Howler and TypeSc
 
    ```bash
    git clone https://github.com/1oki/bubbles-game.git
-   cd match-3-game
+   cd bubbles-game
    ```
 
 2. **Install dependencies**:
