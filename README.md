@@ -38,13 +38,11 @@ This project is a Match-3 Puzzle Game built with PixiJS, GSAP. Howler and TypeSc
 4. **Build the Project**:
 
    ```bash
-   npm run build
+   npm run start
    ```
 5. **Run the Game**:
 
-   ```bash
-   npm run start
-   ```
+   Start the live server to start the game.
 
 ## Gameplay
 1. Objective: Score as many points as possible before the timer runs out by creating tile matches.
